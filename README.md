@@ -5,7 +5,7 @@
 
 <img width="572" alt="image" src="https://github.com/user-attachments/assets/812497ea-400f-416b-82be-4af97cbcce12" />
 
-
+```
 +----------------------------------------------------+
 |                   LangGraph Streaming UI           |
 +----------------------------------------------------+
@@ -20,7 +20,7 @@
 | Summary: "Summary of What is the pipeline status?" |  <-- Summary (Streaming)
 +----------------------------------------------------+
 
-
+```
 
 ---
 ---
