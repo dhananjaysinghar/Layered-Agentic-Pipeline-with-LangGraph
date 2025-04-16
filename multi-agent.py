@@ -4,6 +4,7 @@ from langchain_ollama import OllamaLLM
 from langgraph.graph import StateGraph, END
 from langchain.tools import tool
 from langchain_core.runnables import RunnableLambda
+from difflib import SequenceMatcher
 import re
 import logging
 import asyncio
@@ -78,16 +79,39 @@ def safe_tool_call(tool_func, query: str) -> str:
 async def async_safe_tool_call(tool_name, query):
     return (tool_name, safe_tool_call(tools[tool_name], query))
 
-def rank_results(query, tool_results):
+# def rank_results(query, tool_results):
+#     rankings = []
+#     for tool, result in tool_results.items():
+#         score = 1
+#         if query.lower() in result.lower():
+#             score += 2
+#         if "Error" in result:
+#             score -= 1
+#         rankings.append({"tool": tool, "score": score})
+#     return rankings
+
+def rank_results(query, tool_results, error_penalty=1, match_boost=2):
+    def similarity(a, b):
+        return SequenceMatcher(None, a.lower(), b.lower()).ratio()
+
     rankings = []
     for tool, result in tool_results.items():
-        score = 1
+        score = 1  # base score
+
+        # Boost for match
         if query.lower() in result.lower():
-            score += 2
-        if "Error" in result:
-            score -= 1
+            score += match_boost
+        else:
+            score += int(similarity(query, result) * match_boost)
+
+        # Penalty for errors
+        if "error" in result.lower():
+            score -= error_penalty
+
         rankings.append({"tool": tool, "score": score})
-    return rankings
+
+    # Sort by descending score
+    return sorted(rankings, key=lambda x: x["score"], reverse=True)
 
 # === Nodes ===
 def rephrase(state: AgentState) -> AgentState:
