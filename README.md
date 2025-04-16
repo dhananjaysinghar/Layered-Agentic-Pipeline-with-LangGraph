@@ -6,6 +6,22 @@
 <img width="572" alt="image" src="https://github.com/user-attachments/assets/812497ea-400f-416b-82be-4af97cbcce12" />
 
 
++----------------------------------------------------+
+|                   LangGraph Streaming UI           |
++----------------------------------------------------+
+| [Ask a question...]                                |  <-- Text Input (dcc.Input)
++----------------------------------------------------+
+| Rephrased: "Rephrased: What is the pipeline status?"|  <-- Rephrased Question (Streaming)
++----------------------------------------------------+
+| Tool results: "Data from tool1, Data from tool2"   |  <-- Tool Results (Streaming)
++----------------------------------------------------+
+| Answer: "Answer generated for: What is the pipeline status?"  |  <-- Generated Answer (Streaming)
++----------------------------------------------------+
+| Summary: "Summary of What is the pipeline status?" |  <-- Summary (Streaming)
++----------------------------------------------------+
+
+
+
 ---
 ---
 
